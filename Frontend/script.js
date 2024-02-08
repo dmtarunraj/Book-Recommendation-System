@@ -1,20 +1,33 @@
-const axios = require('axios')
+// const axios = require('axios')
 
 
-axios.post('http://localhost:3000/api/user/createUser',{Email:"abhi@gmail.com", password:"abhi@123", username:"abhi",Age:"20",Gender:"male"})
-.then(res=>console.log(res)).catch(err=>console.log(err))
 
-function login() {
-    // Perform login logic (replace this with your actual login implementation)
-    const username = document.getElementById('username').value;
-    const password = document.getElementById('password').value;
 
-    // Dummy login logic for demonstration purposes
-    if (username === 'demo' && password === 'demo') {
-        // Redirect to the registration page
-        window.location.href = 'registration.html';
-    } else {
-        alert('Invalid username or password. Please try again.');
+async function login() {
+    try {
+        // Gather input values from the form
+        const username = document.getElementById('username').value;
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        const gender = document.querySelector('input[name="gender"]:checked').value;
+        const age = document.getElementById('age').value;
+
+        // Perform Axios request
+        const response = await axios.post('http://localhost:3000/api/user/createUser', {
+            Email: email,
+            password: password,
+            username: username,
+            Age: age,
+            Gender: gender
+        });
+
+        // Handle the response as needed
+        console.log(response.data);
+        
+        // Redirect to another page or perform other actions based on the response
+    } catch (error) {
+        // Handle errors
+        console.error('Error:', error);
     }
 }
 

@@ -1,11 +1,11 @@
 import express from "express";
 import mysql from 'mysql2';
-
+import cors from "cors"
 const app = express()
 
 app.use(express.json({ limit: "16kb" }))
 app.use(express.urlencoded({ extended: true, limit: "16kb" }))
-
+app.use(cors({origin:"*"}))
 const port = 3000
 
 app.listen(port, () => {
@@ -35,7 +35,7 @@ const createUser = async (req, res) => {
         const {Email, password, username,Age,Gender } = req.body;
 
         connection.query(
-            'INSERT INTO Users (UserID,Email, password, username,Age,Gender) VALUES (1,?, ?, ?,?,?)',
+            'INSERT INTO Users (UserID,Email, password, username,Age,Gender) VALUES (2,?, ?, ?,?,?)',
             [Email, password, username,Age,Gender],
             (err, result) => {
                 if (err) {
