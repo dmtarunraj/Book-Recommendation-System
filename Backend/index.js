@@ -35,7 +35,7 @@ const createUser = async (req, res) => {
         const {Email, password, username,Age,Gender } = req.body;
 
         connection.query(
-            'INSERT INTO Users (UserID,Email, password, username,Age,Gender) VALUES (2,?, ?, ?,?,?)',
+            'INSERT INTO Users (Email, password, username,Age,Gender) VALUES (?, ?, ?,?,?)',
             [Email, password, username,Age,Gender],
             (err, result) => {
                 if (err) {
