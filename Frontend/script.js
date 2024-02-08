@@ -1,3 +1,9 @@
+const axios = require('axios')
+
+
+axios.post('http://localhost:3000/api/user/createUser',{Email:"abhi@gmail.com", password:"abhi@123", username:"abhi",Age:"20",Gender:"male"})
+.then(res=>console.log(res)).catch(err=>console.log(err))
+
 function login() {
     // Perform login logic (replace this with your actual login implementation)
     const username = document.getElementById('username').value;
