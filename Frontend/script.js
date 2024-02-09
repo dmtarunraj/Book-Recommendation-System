@@ -3,7 +3,7 @@
 
 
 
-async function login() {
+async function Signup() {
     try {
         // Gather input values from the form
         const username = document.getElementById('username').value;
@@ -23,10 +23,43 @@ async function login() {
 
         // Handle the response as needed
         console.log(response.data);
-        
+        if(response?.data?.data){
+            window.location.href = 'recommendations.html';
+        }
         // Redirect to another page or perform other actions based on the response
     } catch (error) {
         // Handle errors
+        console.error('Error:', error);
+    }
+}
+
+async function loginUser() {
+    try {
+        // Perform Axios request to login endpoint
+        console.log("hi")
+        const email = document.getElementById('emailLogin').value;
+        const password = document.getElementById('passwordLogin').value;
+        console.log(email,password)
+        const response = await axios.post('http://localhost:3000/api/user/login', {
+            Email: email,   
+            password: password,
+        });
+
+        // Handle the response as needed
+        console.log(response);
+        if(response?.data?.data){
+            window.location.href = 'recommendations.html';
+        }
+        
+        // if (response?.data?.data) {
+        //     // Redirect to another page upon successful login
+        //     window.location.href = 'dashboard.html';
+        // } else {
+        //     // Handle unsuccessful login (show an error message, etc.)
+        //     console.error('Login failed. Invalid credentials.');
+        // }
+    } catch (error) {
+        // Handle errors (connection error, server error, etc.)
         console.error('Error:', error);
     }
 }
