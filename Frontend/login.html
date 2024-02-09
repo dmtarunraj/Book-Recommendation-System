@@ -86,33 +86,25 @@
     </div>
 
     <script >
-    async function loginUser() {
+      async function loginUser(event) {
         try {
-            // Perform Axios request to login endpoint
-            console.log("hi")
+            event.preventDefault(); // Prevent default form submission
+
             const email = document.getElementById('emailLogin').value;
             const password = document.getElementById('passwordLogin').value;
-            console.log(email,password)
+
             const response = await axios.post('http://localhost:3000/api/user/login', {
-                Email: email,   
+                Email: email,
                 password: password,
             });
-    
-            // Handle the response as needed
-            console.log(response);
-            if(response?.data?.data){
-            window.location.href = 'recommendations.html';
-        }
-            
-            // if (response?.data?.data) {
-            //     // Redirect to another page upon successful login
-            //     window.location.href = 'dashboard.html';
-            // } else {
-            //     // Handle unsuccessful login (show an error message, etc.)
-            //     console.error('Login failed. Invalid credentials.');
-            // }
+
+            if (response?.data?.data) {
+                window.location.href = 'recommendations.html';
+            } else {
+                console.log("Wrong credentials");
+                // You can handle the invalid credentials scenario here (show an error message, etc.)
+            }
         } catch (error) {
-            // Handle errors (connection error, server error, etc.)
             console.error('Error:', error);
         }
     }</script>

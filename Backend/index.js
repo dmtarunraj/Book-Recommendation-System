@@ -69,6 +69,8 @@ const createUser = async (req, res) => {
     }
 };
 
+app.post('/api/user/createUser', createUser)
+
 const loginUser = async (req, res) => {
     try {
         const {Email, password } = req.body;
