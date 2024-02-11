@@ -35,7 +35,7 @@ function Signup() {
       if (response?.data?.data) {
         const res = await axios.get("http://localhost:3000/api/user/getUser", {
             params: {
-              UserID: userData?.data?.data, // Assuming userID is the correct parameter name
+              UserID: response?.data?.data, // Assuming userID is the correct parameter name
             },
           });
           console.log(res);

@@ -74,6 +74,7 @@ console.log(userData)
         <div className="form-group">
           <button type="button" onClick={loginUser}>Login</button>
         </div>
+        New User <button className='p-2 bg-green-200' onClick={()=>navigate("/signup")}>SignUp</button>
       </form>
     </div>
   );

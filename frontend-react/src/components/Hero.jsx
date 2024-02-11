@@ -19,7 +19,7 @@ function Hero() {
 
     fetchAllBooks();
   }, []);
-  console.log("books",books)
+  // console.log("books",books)
   return (
     <div className='p-3'>
         <h1 className='text-2xl font-bold m-3'>ALL BOOKS</h1>

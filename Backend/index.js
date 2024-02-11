@@ -383,3 +383,189 @@ const getUser = async (req, res) => {
 };
 
 app.post("/api/alreadyRead/add", addToAlreadyRead);
+
+
+const getAlreadyReadBooks = async (req, res) => {
+    try {
+        const { UserID } = req.params; // Assuming UserID is passed as a route parameter
+        console.log(UserID)
+        // Selecting all the books read by a specific user
+        connection.query(
+            'SELECT BookInformation.* FROM BookInformation ' +
+            'INNER JOIN AlreadyRead ON BookInformation.BookID = AlreadyRead.BookID ' +
+            'WHERE AlreadyRead.UserID = ?',
+            [UserID],
+            (err, result) => {
+                if (err) {
+                    console.error("Error fetching already read books:", err);
+                    return res.status(500).json({
+                        success: false,
+                        message: "Failed to fetch already read books",
+                        error: err
+                    });
+                } else {
+                    return res.status(200).json({
+                        success: true,
+                        books: result,
+                        message: "Fetched already read books successfully"
+                    });
+                }
+            }
+        );
+    } catch (err) {
+        return res.status(500).json({
+            success: false,
+            message: "Error fetching already read books",
+            error: err
+        });
+    }
+};
+
+app.get("/api/alreadyRead/user/:UserID", getAlreadyReadBooks);
+
+const checkIfBookAlreadyRead = async (req, res) => {
+    try {
+        const { UserID, BookID } = req.body;
+
+        connection.query(
+            'SELECT * FROM AlreadyRead WHERE UserID = ? AND BookID = ?',
+            [UserID, BookID],
+            (err, result) => {
+                if (err) {
+                    console.error("Error checking if book is already read:", err);
+                    return res.status(500).json({
+                        success: false,
+                        message: "Error checking if book is already read",
+                        error: err
+                    });
+                } else {
+                    const isBookAlreadyRead = result.length > 0 ? true : false;
+                    return res.status(200).json({
+                        success: true,
+                        isBookAlreadyRead: isBookAlreadyRead,
+                        message: isBookAlreadyRead ? "Book is already read" : "Book is not yet read"
+                    });
+                }
+            }
+        );
+    } catch (err) {
+        return res.status(500).json({
+            success: false,
+            message: "Error checking if book is already read",
+            error: err
+        });
+    }
+};
+
+// Example usage in your route
+app.post("/api/alreadyRead/check", checkIfBookAlreadyRead);
+
+
+const addToInterestedBooks = async (req, res) => {
+    try {
+        const { UserID, BookID } = req.body; // Assuming the data is passed in the request body
+        connection.query(
+            'INSERT INTO InterestedBooks (UserID, BookID) VALUES (?, ?)',
+            [UserID, BookID],
+            (err, result) => {
+                if (err) {
+                    console.error("Error adding to InterestedBooks:", err);
+                    return res.status(500).json({
+                        success: false,
+                        message: "Failed to add to InterestedBooks",
+                        error: err
+                    });
+                } else {
+                    return res.status(200).json({
+                        success: true,
+                        message: "Added to InterestedBooks successfully"
+                    });
+                }
+            }
+        );
+    } catch (err) {
+        return res.status(500).json({
+            success: false,
+            message: "Error adding to InterestedBooks",
+            error: err
+        });
+    }
+};
+
+app.post("/api/interestedBooks/add", addToInterestedBooks);
+
+
+const getInterestedBooks = async (req, res) => {
+    try {
+        const { UserID } = req.params; // Assuming UserID is passed as a route parameter
+
+        connection.query(
+            'SELECT BookInformation.* FROM BookInformation ' +
+            'INNER JOIN InterestedBooks ON BookInformation.BookID = InterestedBooks.BookID ' +
+            'WHERE InterestedBooks.UserID = ?',
+            [UserID],
+            (err, result) => {
+                if (err) {
+                    console.error("Error fetching interested books:", err);
+                    return res.status(500).json({
+                        success: false,
+                        message: "Failed to fetch interested books",
+                        error: err
+                    });
+                } else {
+                    return res.status(200).json({
+                        success: true,
+                        books: result,
+                        message: "Fetched interested books successfully"
+                    });
+                }
+            }
+        );
+    } catch (err) {
+        return res.status(500).json({
+            success: false,
+            message: "Error fetching interested books",
+            error: err
+        });
+    }
+};
+
+app.get("/api/interestedBooks/user/:UserID", getInterestedBooks);
+
+
+const checkIfBookInterested = async (req, res) => {
+    try {
+        const { UserID, BookID } = req.body;
+
+        connection.query(
+            'SELECT * FROM InterestedBooks WHERE UserID = ? AND BookID = ?',
+            [UserID, BookID],
+            (err, result) => {
+                if (err) {
+                    console.error("Error checking if book is already interested:", err);
+                    return res.status(500).json({
+                        success: false,
+                        message: "Error checking if book is already interested",
+                        error: err
+                    });
+                } else {
+                    const isBookInterested = result.length > 0 ? true : false;
+                    return res.status(200).json({
+                        success: true,
+                        isBookInterested: isBookInterested,
+                        message: isBookInterested ? "Book is already interested" : "Book is not yet interested"
+                    });
+                }
+            }
+        );
+    } catch (err) {
+        return res.status(500).json({
+            success: false,
+            message: "Error checking if book is already interested",
+            error: err
+        });
+    }
+};
+
+// Example usage in your route
+app.post("/api/interestedBooks/check", checkIfBookInterested);

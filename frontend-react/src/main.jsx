@@ -8,6 +8,9 @@ import Home from './components/Home.jsx';
 import Signup from './components/Signup.jsx';
 import Login from './components/Login.jsx';
 import { store } from './store/store.js';
+import Interested from './components/Interested.jsx';
+import AlreadyRead from './components/AlreadyRead.jsx';
+import Recommended from './components/Recommended.jsx';
 
 const router = createBrowserRouter([
   {
@@ -26,8 +29,18 @@ const router = createBrowserRouter([
       {
         path: "/signup",
         element: <Signup />,
+      },{
+        path: "/books/interested",
+        element: <Interested />,
       },
-      
+      {
+        path: "/books/alreadyRead",
+        element: <AlreadyRead />,
+      },
+      {
+        path: "/books/recommendation",
+        element: <Recommended />,
+      },
     ],
   },
 ]);
