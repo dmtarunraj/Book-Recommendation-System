@@ -21,7 +21,7 @@ const Header = () => {
   const status = useSelector(state => state.status)
   return (
     <div style={headerStyle} className="bg-gray-800 text-white p-4">
-      <h1 className="text-3xl font-bold mb-4">Book</h1>
+      <h1 className="text-3xl font-bold mb-4">Book Recommendation System</h1>
       {status && (
         <div className="flex items-center justify-between">
           <div className="flex space-x-4">

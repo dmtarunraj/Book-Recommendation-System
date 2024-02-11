@@ -494,11 +494,11 @@ const addToInterestedBooks = async (req, res) => {
 
 app.post("/api/interestedBooks/add", addToInterestedBooks);
 
-
 const getInterestedBooks = async (req, res) => {
     try {
         const { UserID } = req.params; // Assuming UserID is passed as a route parameter
 
+        
         connection.query(
             'SELECT BookInformation.* FROM BookInformation ' +
             'INNER JOIN InterestedBooks ON BookInformation.BookID = InterestedBooks.BookID ' +
