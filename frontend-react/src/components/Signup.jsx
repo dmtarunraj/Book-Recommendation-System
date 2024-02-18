@@ -13,7 +13,7 @@ function Signup() {
     username: '',
     email: '',
     password: '',
-    gender: '',
+    gender: 'male',
     age: '',
   });
 
@@ -97,6 +97,7 @@ function Signup() {
     id="genderSignup"
     name="gender"
     required
+    
     onChange={(e) => {
       setUserData((prev) => ({ ...prev, gender: e.target.value }))
     }}

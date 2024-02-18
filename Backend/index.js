@@ -569,3 +569,48 @@ const checkIfBookInterested = async (req, res) => {
 
 // Example usage in your route
 app.post("/api/interestedBooks/check", checkIfBookInterested);
+
+
+const fetchReccommanded = async (req,res)=>{
+    try{
+        const {Age,Gender} = req.query;
+        connection.query(`SELECT * 
+        FROM BookInformation 
+        WHERE GenreName IN (
+            SELECT GenreName 
+            FROM Genre 
+            WHERE GenreID IN (
+                SELECT GenreID 
+                FROM AgeGenderGenreMapping 
+                WHERE CAST(SUBSTRING_INDEX(AgeGroup, '-', 1) AS SIGNED) <= ${Age} 
+                AND CAST(SUBSTRING_INDEX(AgeGroup, '-', -1) AS SIGNED) >= ${Age}
+                AND Gender = '${Gender}'
+            )
+        );
+        `,
+        (err, result) => {
+            if (err) {
+                console.error("Error checking if book is already interested:", err);
+                return res.status(500).json({
+                    success: false,
+                    message: "Error checking if book is already interested",
+                    error: err
+                });
+            } else {
+                const isBookInterested = result.length > 0 ? true : false;
+                return res.status(200).json({
+                    success: true,
+                    data: result,
+                    message:  "Book is already interested" 
+                });
+            }
+        })
+    }catch(err){
+        return res.status(500).json({
+            success: false,
+            message: "Error fetching reccommanded books",
+            error: err
+        });
+    }
+}
+app.get('/api/recommendations',fetchReccommanded);
